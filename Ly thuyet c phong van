@@ -1,0 +1,107 @@
+#Static:
+Biến static gồm 2 loại: +Static cục bộ. +Static toàn cục.
+1) Biến Static cục bộ:
+- Khi 1 biến cục bộ được khai báo với từ khóa static. Biến sẽ chỉ được khởi tạo 1 lần duy nhất và tồn tại suốt thời gian chạy chương trình. Giá trị của nó không bị mất đi ngay cả khi kết thúc hàm. 
+- Biến cục bộ static chỉ có thể được gọi trong nội bộ hàm khởi tạo ra nó.
+- Mỗi lần hàm được gọi, giá trị của biến chính bằng giá trị tại lần gần nhất hàm được gọi.
+2) Biến Static toàn cục:
+- Sử dụng được mọi nơi ở chương trình và nó chỉ khai báo 1 lần.
+- Biến toàn cục static sẽ chỉ có thể được truy cập và sử dụng trong File khai báo nó, các File khác không có cách nào truy cập được.
+
+#Phân vùng nhớ
+Trong GAM chia thành 5 phân vùng nhớ: Text, Data, Bss, Heap, Stack.
+1) Phân vùng nhớ Text segment:
+- Là nơi mà lưu trữ các mã lệnh đã được biên dịch của các chương trình máy tính. Những mã lệnh trong phân vùng này sẽ được chuyển đến CPU xử lý khi cần thiết.
+- Chứa các khai báo hằng số.
+- Chỉ để đọc.
+2) Phân vùng nhớ Data:
+- Phần này được chia nhỏ ra làm 2 phần: 
+a. Vùng nhớ hằng
+•	Đây là vùng nhớ chỉ cho phép đọc và ghi vào lần đầu, sau đó giá trị được ghi sẽ tồn tại trong suốt chương trình mà không thể thay đổi giá trị. 
+b.Vùng nhớ lưu trữ biến toàn cục, các biến static đã được khai báo giá trị 
+•	Vùng nhớ này chuyên lưu trữ các biến toàn cục, các biến static đã được khai báo giá trị khác 0. 
+•	Các biến trong vùng nhớ này có đặc điểm sẽ được tồn tại trong cả quá trình chương trình chạy và có thể đọc và ghi được.
+3)Phân vùng nhớ Bss:
+•	Vùng nhớ này chuyên lưu trữ các biến toàn cục, các biến static chưa được khai báo giá trị.
+•	Các biến trong vùng nhớ này có đặc điểm sẽ được tồn tại trong cả quá trình chương trình chạy và có thể đọc và ghi được.
+4)Phân vùng nhớ HEAP:
+•	Vùng nhớ Heap được sử dụng để cấp phát bộ nhớ động. Đặc chưng cú pháp khi sử dụng cấp phát động trong ngôn ngữ C là từ khóa calloc, malloc,realloc. 
+•	Đặc điểm của vùng nhớ khi sử dụng cấp phát động là nó sẽ không tự mất đi trong quá trình chạy, và chúng ta phải tự giải phóng vùng nhớ này bằng từ khóa free. 
+•	Nếu không giải phóng thì vùng nhớ này có thể bị đầy gây ra lỗi.
+• Có quyền truy cập đọc và ghi.
+5) Phân vùng nhớ Stack:
+• Có quyền truy cập đọc và viết.
+• Được sử dụng để khai báo biến local, input paravector của hàm.
+• Được giải phóng khi ra khỏi block code của hàm.
+
+--So sánh phân vùng nhớ Bss và Data:
++ Giống nhau: Đều được lưu trong RAM trong quá trình thực thi của chương trình, đều là phân vùng nhớ tĩnh
++ Khác nhau:
+Phân vùng nhớ BSS sẽ lưu các biến toàn cục và static chưa được khởi tạo giá trị ban đầu, còn phân vùng nhớ data sẽ lưu các biến toàn cục và static đã được khởi tạo giá trị ban đầu.
+Gía trị mặc định của các biến trong phân vùng nhớ BSS là 0, trong khi giá trị mặc định của các biến trong phân vùng nhớ Data phụ thuộc vào giá trị khởi tạo ban đầu.
+
+--So sánh phân vùng nhớ Heap và Stack:
++ Giống nhau: •	Bộ nhớ Heap và bộ nhớ Stack bản chất đều cùng là vùng nhớ được tạo ra và lưu trữ trong RAM khi chương trình được thực thi.
++ Khác nhau: 
+a.	Bộ nhớ Stack:
+•	Bộ nhớ Stack được dùng để lưu trữ các biến cục bộ trong hàm, tham số truyền vào... Truy cập vào bộ nhớ này rất nhanh và được thực thi khi chương trình được biên dịch.
+•	Vùng nhớ Stack được quản lý bởi hệ điều hành, dữ liệu được lưu trong Stack sẽ tự động hủy khi hàm thực hiện xong công việc của mình.
+b.	Bộ nhớ Heap:
+•	Bộ nhớ Heap được dùng để lưu trữ vùng nhớ cho những biến được cấp phát động bởi các hàm malloc - calloc - realloc (trong C). 
+•	Sử dụng heap có thể dẫn đến các lỗi bộ nhớ như: thừa một phần bộ nhớ, hoặc ghi đè lên bộ nhớ không được cấp phát.Nếu liên tục cấp phát vùng nhớ mà không giải phóng thì sẽ bị lỗi tràn vùng nhớ Heap (Heap overflow).
+
+#Em hãy phân biệt sự khác nhau giữa Macro, Inline và Function:
+
+1. Macro:
+•	 Được xử lý bởi preprocessor
+•	Thay thế đoạn code được khai báo macro vào bất cứ chỗ nào xuất hiện macro đó
+•	VD: #define SUM(a,b)     (a+b)
+•	Preprocessor khi gặp bất kỳ lời gọi SUM(first+last) nào thì thay ngay bằng (first+last)
+2. Inline
+•	Được xử lý bởi compiler
+•	Được khai báo với từ khóa inline
+•	Khi compiler thấy bất kỳ chỗ nào xuất hiện inline function, nó sẽ thay thế chỗ đó bởi định nghĩa của hàm đã được compile tương ứng. –> Phần được thay thế không phải code mà là đoạn code đã được compile
+3. Hàm bình thường
+•	Khi thấy hàm được gọi, compiler sẽ phải lưu con trỏ chương trình PC hiện tại vào stack pointer; chuyển con trỏ PC tới hàm được gọi, thực hiện hàm đó xong và lấy kết quả trả về; sau đó quay lại vị trí ban đầu trong stack pointer trước khi gọi hàm và tiếp tục thực hiện chương trình.
+•	Như có thể thấy, cách này khiến chương trình tốn thời gian hơn là chỉ cần thay thế đoạn code đã được compile (cách của inline function)
+
+So sánh macro và Function:
++ Marco thường được sử dụng với các tác vụ đơn giản, trong khi đó function được sử dụng với các tác vụ dài và phức tạp hơn. 
++ Marco không có kiểu trả về, trong khi function có kiểu tra về. 
++ Marco được định nghĩa qua #define và không cần khai báo trước, trong khi function phải khai báo định nghĩa và định nghĩa trước khi sử dụng 
++ Về tốc độ và kích thước thì thông thường marco sẽ nhanh hơn và nhỏ hơn function 
++ Tuy vây, marco cũng có hạn chế về việc không được kiểm tra lỗi, không được phân biệt kiểu dữ liệu sẽ dẫn đến cách lỗi không mong muốn khi sử dụng sai cách.
+
+#Struct và Union:
+
+Struct và Union là gì?
+1.	Kiểu dữ liệu struct:
+•	Là kiểu dữ liệu do người dùng định nghĩa để quản lý tổng thể các biến/member trong nó, trong struct có vô số kiểu dữ liệu (float, char, int…)
+•	Ví dụ: Kiểu dữ liệu struct Sinh Viên quản lý sinh viên trong lớp bao gồm các biến Họ Tên, Năm sinh, MSSV.
+2.	Kiểu dữ liệu union:
+•	Kiểu dữ liệu Union là kiểu dữ liệu có do người dùng định nghĩa, tương tự như struct, union chứa một tập hợp các thành phần (member hoặc biến) có kiểu dữ liệu khác nhau. 
+•	Ví dụ: Kiểu union CachDiChuyen từ HN đến SG bao gồm (máy bay, tàu hỏa, xe) chỉ có thể chọn 1 trong cách cách.
+
+3.	So sánh giữa Struct va Union:
+Về mặt ý nghĩa, struct và union cơ bản giống nhau. Tuy nhiên, về mặt lưu trữ trong bộ nhớ, chúng có sự khác biệt rõ rệt như sau:
+•	struct: Dữ liệu của các thành viên của struct được lưu trữ ở những vùng nhớ khác nhau. Do đó kích thước của 1 struct tối thiểu bằng kích thước các thành viên cộng lại tại vì còn phụ thuộc vào bộ nhớ đệm (struct padding)
+•	Union : Dữ liệu các thành viên sẽ dùng chung 1 vùng nhớ. Kích thước của union được tính là kích thước lớn nhất của kiểu dữ liệu trong union. Việc thay đổi nội dung của 1 thành viên sẽ dẫn đến thay đổi nội dung của các thành viên khác.
+
+#Con trỏ
+
+1) Con trỏ là gì?
+•	Con trỏ trong C cũng chỉ là là biến, cũng có thể khai báo, khởi tạo và lưu trữ giá trị và có địa chỉ của riêng nó. Nhưng biến con trỏ không lưu giá trị bình thường,nó là biến trỏ tới 1 địa chỉ khác, tức mang giá trị là 1 địa chỉ.
+•	Để lấy giá trị biến con trỏ trỏ tới thêm kí tự * phía trước, lấy địa chỉ của con trỏ thì thêm kí tự & trước còn để lấy giá trị con trỏ ta chỉ cần gọi nó.
+•	Kích thước của các biến con trỏ có khác nhau không? Con trỏ chỉ lưu địa chỉ nên kích thước của mọi con trỏ là như nhau.
+2) Con trỏ NULL
+•	Sau khi khai báo sau ta phải nên gán giá trị cho con trỏ. 
+•	Nếu chưa sử dụng ta nên gán cho con trỏ NULL, 
+• Khi khai báo con trỏ, các hàm đã xử lý xong, nếu khổng cần sử dụng nữa thì gán nó về con trỏ NULL.
+•	Con trỏ NULL là con trỏ lưu địa chỉ 0x00000000 và giá trị =0. Tức địa chỉ bộ nhớ 0, có ý nghĩa đặc biệt, cho biết con trỏ không trỏ vào đâu cả. 
+3) Con trỏ void
+• Có thể trỏ đến bất cứ kiểu biến nào.
+• Chỉ có thể lưu địa chỉ, muốn lấy giá trị của địa chỉ thì phải ép kiểu cho nó.
+4) Con trỏ trỏ đến con trỏ (pointer to pointer)
++ Dùng để lưu địa chỉ của con trỏ khác.
+
+
